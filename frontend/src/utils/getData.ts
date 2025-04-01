@@ -9,7 +9,7 @@ export function getData(link) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/${link}`);
+        const res = await axios.get(`https://barangayapi.vercel.app/${link}`);
         setData(res.data);
       } catch (err) {
         setError(err);

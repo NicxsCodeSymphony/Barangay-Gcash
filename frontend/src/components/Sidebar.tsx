@@ -38,7 +38,15 @@ const NavItem = ({ icon, label }) => {
         <motion.div 
             whileHover={{ scale: 1.05 }} 
             className="flex items-center space-x-3 p-3 cursor-pointer text-gray-700 hover:bg-gray-100 rounded-lg transition"
-            onClick={() => window.location.href=`/${label.toLowerCase()}` }
+            onClick={() => {
+                if (label !== "Logout") {
+                  window.location.href = `/${label.toLowerCase()}`;
+                } else {
+                sessionStorage.removeItem('user');
+                window.location.href = "/"
+                }
+              }}
+              
         >
             <span className="text-lg">{icon}</span>
             <span className="text-sm font-medium">{label}</span>

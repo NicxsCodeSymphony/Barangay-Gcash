@@ -26,7 +26,7 @@ const Login = () => {
     }
     
     // Dummy authentication logic (replace with backend API call)
-    if (email === "admin@example.com" && password === "password") {
+    if (email === "admin@gmail.com" && password === "password") {
       sessionStorage.setItem("user", JSON.stringify({ email }));
       alert("Login Successful!");
       window.location.reload();

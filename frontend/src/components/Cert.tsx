@@ -131,7 +131,7 @@ const CertificationGenerator = ({ documentDetails }) => {
       formData.append('attachment', pdfBlob, 'barangay_certification.pdf');
       
       // Send email using your backend API
-      const response = await axios.post('http://localhost:3001/send-email', formData, {
+      const response = await axios.post('https://barangayapi.vercel.app/send-email', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -141,7 +141,8 @@ const CertificationGenerator = ({ documentDetails }) => {
         setSuccessMessage("Email sent successfully!");
         
         // Update document status in your database
-        await axios.put(`http://localhost:3001/document/${documentDetails.documentId}`, {
+        await axios.put(`https://barangayapi.vercel.app/document/${documentDetails.documentId}`, {
+          status: "Completed",
           email_sent: true,
           email_sent_date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
         });
