@@ -29,11 +29,12 @@ router.get('/', async (req, res) => {
             const official = officials[key];
             const residentSnapshot = await db.ref('residents/' + official.resident_id).once('value');
             const resident = residentSnapshot.val();
+            
             return {
                 ...official,
-                first_name: resident?.first_name,
-                middle_name: resident?.middle_name,
-                last_name: resident?.last_name
+                first_name: resident.first_name,
+                middle_name: resident.middle_name,
+                last_name: resident.last_name
             };
         }));
 

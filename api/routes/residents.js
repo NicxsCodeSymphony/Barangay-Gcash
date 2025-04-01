@@ -72,4 +72,36 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.put('/:id/change-password', async (req, res) => {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+        return res.status(400).send({ error: "Both current password and new password are required" });
+    }
+
+    try {
+        // Get the resident data
+        const snapshot = await db.ref('residents/' + id).once('value');
+        const resident = snapshot.val();
+        
+        if (!resident) {
+            return res.status(404).send({ error: "Resident not found" });
+        }
+
+        // Verify the current password directly
+        if (resident.password !== currentPassword) {
+            return res.status(401).send({ error: "Current password is incorrect" });
+        }
+
+        // Update the password directly
+        await db.ref('residents/' + id).update({ password: newPassword });
+        
+        res.send({ success: "Password updated successfully" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
+});
+
 module.exports = router;
